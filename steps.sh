@@ -17,8 +17,7 @@ Current workspace environment has NodeJS ready to be used,
 also there are several tools like npm and yarn available.
 
 Start the node project, run this command:
-  - yarn init
-  Note: you can set any value you want, but the default ones are ok
+  - yarn init -y
 '
     ;;
 "2")
@@ -35,9 +34,10 @@ Step 3:
 
 Excecute postgraphile as service, run this command:
   - yarn postgraphile -w -o \
+      -n "0.0.0.0" \
       -p 3000 \
       -c "postgres://postgres:postgres@localhost:5432/postgres" &
-  Note: adjust the postgraphile port (3000) if you require it
+  Note: adjust the postgraphile port (3000) if you require it, it should match with the port set when you ran the workspace Docker container
   Note: adjust the database port (5432) if you have changed it at the moment you ran the PostgreSQL database Docker container
   Note: you can use any PostgreSQL URL connection:
     - postgres://pg_user:pg_pass@pg_host:pg_port/pg_db?ssl=true
@@ -75,6 +75,7 @@ Now we must restart the service to use the PlugIn:
         --append-plugins postgraphile-plugin-connection-filter \
         -p 3000 \
         -c "postgres://postgres:postgres@localhost:5432/postgres" &
+    Note: use the same ports established at step 3
 
 Explore the Apollo Studio Sandbox again to see the PlugIn'\''s effect
   Run the command with step 4 if you need help to open it
@@ -97,6 +98,7 @@ Now we must restart the service to use the PlugIn:
         --append-plugins postgraphile-plugin-connection-filter,postgraphile-plugin-nested-mutations \
         -p 3000 \
         -c "postgres://postgres:postgres@localhost:5432/postgres" &
+    Note: use the same ports established at step 3
 
 Explore the Apollo Studio Sandbox again to see the PlugIn'\''s effect
   Run the command with step 4 if you need help to open it
@@ -313,6 +315,7 @@ We must restart the service to activate the Postgraphile JWT functionality:
         --default-role default_role \
         -p 3000 \
         -c "postgres://postgres:postgres@localhost:5432/postgres" &
+    Note: use the same ports established at step 3
 
 Now resources are not available to be used, so confirm you are not able to interact
 with the service in the Apollo Studio Sandbox:
@@ -370,7 +373,7 @@ Install cors dependency, run this command:
 Step 17:
 
 Add an index.js file with an example code, run this command:
-  Note: adjust the ExpressJS port (3000) if you require it
+  Note: adjust the ExpressJS port (3000) if you require it, it should match with the port set when you ran the workspace Docker container
 
   - cat > index.js <<EOF
 const express = require('\''express'\'')
@@ -382,7 +385,7 @@ app.get('\''/'\'', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(\`ExpressJS listening on port \${port}`)
+  console.log(\`ExpressJS listening on port \${port}\`)
 })
 EOF
 '
@@ -392,7 +395,7 @@ EOF
 Step 18:
 
 Update the index.js file with the Postgraphile library usage, run this command:
-  Note: adjust the ExpressJS port (3000) if you require it
+  Note: adjust the ExpressJS port (3000) if you require it, it should match with the port set when you ran the workspace Docker container
   Note: adjust the database port (5432) if you have changed it at the moment you ran the PostgreSQL database Docker container
 
   - cat > index.js <<EOF
@@ -616,6 +619,9 @@ EOF
   Run the ReactJS gql-app aplication, run this command:
     Note: you can stop the ReactJS app by pressing "Ctrl" + "c"
     - yarn start
+    Note: the ReactJS app will assign the port 3001, which should match the one set when we ran the workspace Docker container,
+          if other port is assigned, then this could not work if you don'\''t re-run the workspace container with the
+          corresponding port mapping.
 '
     ;;
 "25")
@@ -637,9 +643,12 @@ Clean Up everything:
   Stop the database Docker container, run this command:
     - docker stop pgraphdb
 
-  And finally remove the Docker images, run these commands:
+  Remove the Docker images, run these commands:
     - docker rmi postgres:latest
     - docker rmi node:latest
+
+  And finally remove the Docker network, run these commands:
+    - docker network rm pgraphnet
 
   We are done! Thanks for your time! I hope you enjoyed it!
 '

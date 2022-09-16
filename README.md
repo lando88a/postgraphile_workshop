@@ -24,9 +24,10 @@ Please just open a terminal and run the RUNME.sh script to see the commands you 
 
 ## Clean Up
 
-To clean everything related with this workshop, you just need to ensure all Docker containers are stopped and deleted, and finally remove the Docker images if you don't need them anymore:
+To clean everything related with this workshop, you just need to ensure all Docker containers are stopped and deleted, and finally remove the Docker network and Docker images if you don't need them anymore:
 
-- postgres:latest
-- node:latest
+```docker network rm pggraphnet```
+```docker rmi postgres:latest```
+```docker rmi node:latest```
 
 Also, don't forget to delete the project repository folder.
