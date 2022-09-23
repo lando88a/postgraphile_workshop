@@ -3,7 +3,7 @@ This is a help tool to start working with this repository
 
 We assume you have Docker installed and working
 
-  RUN this command to create a custom network to connect our containers:
+  Run this command to create a custom network to connect our containers:
     - docker network create pgraphnet
 
   Run this command to start the example PostgreSQL database we have:

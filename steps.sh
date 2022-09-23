@@ -36,7 +36,7 @@ Excecute postgraphile as service, run this command:
   - yarn postgraphile -w -o \
       -n "0.0.0.0" \
       -p 3000 \
-      -c "postgres://postgres:postgres@localhost:5432/postgres" &
+      -c "postgres://postgres:postgres@pgraphdb:5432/postgres" &
   Note: adjust the postgraphile port (3000) if you require it, it should match with the port set when you ran the workspace Docker container
   Note: adjust the database port (5432) if you have changed it at the moment you ran the PostgreSQL database Docker container
   Note: you can use any PostgreSQL URL connection:
@@ -74,7 +74,7 @@ Now we must restart the service to use the PlugIn:
     - yarn postgraphile -w -o \
         --append-plugins postgraphile-plugin-connection-filter \
         -p 3000 \
-        -c "postgres://postgres:postgres@localhost:5432/postgres" &
+        -c "postgres://postgres:postgres@pgraphdb:5432/postgres" &
     Note: use the same ports established at step 3
 
 Explore the Apollo Studio Sandbox again to see the PlugIn'\''s effect
@@ -97,7 +97,7 @@ Now we must restart the service to use the PlugIn:
     - yarn postgraphile -w -o \
         --append-plugins postgraphile-plugin-connection-filter,postgraphile-plugin-nested-mutations \
         -p 3000 \
-        -c "postgres://postgres:postgres@localhost:5432/postgres" &
+        -c "postgres://postgres:postgres@pgraphdb:5432/postgres" &
     Note: use the same ports established at step 3
 
 Explore the Apollo Studio Sandbox again to see the PlugIn'\''s effect
@@ -314,7 +314,7 @@ We must restart the service to activate the Postgraphile JWT functionality:
         --jwt-secret secret-word \
         --default-role default_role \
         -p 3000 \
-        -c "postgres://postgres:postgres@localhost:5432/postgres" &
+        -c "postgres://postgres:postgres@pgraphdb:5432/postgres" &
     Note: use the same ports established at step 3
 
 Now resources are not available to be used, so confirm you are not able to interact
@@ -409,7 +409,7 @@ const app = express()
 const port = 3000
 
 const pool = new Pool({
-  host: '\''localhost'\'',
+  host: '\''pgraphdb'\'',
   port: 5432,
   database: '\''postgres'\'',
   user: '\''postgres'\'',
